@@ -1,12 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int *stack, top = -1, mid = -1, size;
-
-void initStack(int n) {
-    size = n;
-    stack = (int *)malloc(size * sizeof(int));
-}
 
 void push(int x) {
     if (top == size - 1) {
