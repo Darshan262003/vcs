@@ -14,6 +14,7 @@ import Restaurant from "./restaurant";
 import UserCard from "./pro";
 import Land from "./land";
 import Msg from "./classexample";
+import Validation from "./validate";
 function App()
 {
   return(
@@ -31,6 +32,7 @@ function App()
         <UserCard name={"darshan"} age={21}/>
        <Land/>
        <Msg name={"MSRIT"} year={2025}/>
+       <Validation />
     </div>
 
   );
