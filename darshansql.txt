@@ -1,0 +1,367 @@
+mysql -u mcauser1 -p;
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1045 (28000): Access denied for user 'mcauser1'@'localhost' (using password: YES)
+
+C:\Users\MCA1-B1>mysql -u mcauser1 -p
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.37 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| company23          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| university023      |
+| world              |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use university023;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_university023 |
++-------------------------+
+| course                  |
+| department              |
+| enrollment              |
+| instructor              |
+| student                 |
++-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from studenr;
+ERROR 1146 (42S02): Table 'university023.studenr' doesn't exist
+mysql> select * from student;
++------------+---------+-------------------+-------+
+| Student_Id | Name    | Email             | Major |
++------------+---------+-------------------+-------+
+|        101 | Darshan | dar@gmail.com     | MCA   |
+|        102 | Sagar   | sagar@gmail.com   | MCA   |
+|        103 | Chethan | chethan@gmail.com | MBA   |
+|        104 | Ravi    | ravi@gmail.com    | CSE   |
+|        105 | Vivek   | vivek@gmail.com   | MSc   |
++------------+---------+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set Email="darshu@gmail.com" where Student_Id=101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------------+---------+-------------------+-------+
+| Student_Id | Name    | Email             | Major |
++------------+---------+-------------------+-------+
+|        101 | Darshan | darshu@gmail.com  | MCA   |
+|        102 | Sagar   | sagar@gmail.com   | MCA   |
+|        103 | Chethan | chethan@gmail.com | MBA   |
+|        104 | Ravi    | ravi@gmail.com    | CSE   |
+|        105 | Vivek   | vivek@gmail.com   | MSc   |
++------------+---------+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set Major="Undeclared" where Major!="CSE";
+Query OK, 4 rows affected (0.00 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from student;
++------------+---------+-------------------+------------+
+| Student_Id | Name    | Email             | Major      |
++------------+---------+-------------------+------------+
+|        101 | Darshan | darshu@gmail.com  | Undeclared |
+|        102 | Sagar   | sagar@gmail.com   | Undeclared |
+|        103 | Chethan | chethan@gmail.com | Undeclared |
+|        104 | Ravi    | ravi@gmail.com    | CSE        |
+|        105 | Vivek   | vivek@gmail.com   | Undeclared |
++------------+---------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from enrollment where Studenr_id=502;
+ERROR 1054 (42S22): Unknown column 'Studenr_id' in 'where clause'
+mysql> delete from enrollment where Student_id=502;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from enrollment;
++------------+-----------+----------+-------+
+| Student_Id | Course_Id | Semester | Grade |
++------------+-----------+----------+-------+
+|        101 |       301 | I        | A+    |
+|        102 |       302 | II       | A     |
+|        103 |       303 | II       | B     |
+|        104 |       304 | IV       | B+    |
+|        105 |       305 | V        | O     |
++------------+-----------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> delete from enrollment where Student_id=102;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from enrollment;
++------------+-----------+----------+-------+
+| Student_Id | Course_Id | Semester | Grade |
++------------+-----------+----------+-------+
+|        101 |       301 | I        | A+    |
+|        103 |       303 | II       | B     |
+|        104 |       304 | IV       | B+    |
+|        105 |       305 | V        | O     |
++------------+-----------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update course set credits=5 where title="DSA";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----------+------------+---------+---------------+
+| Course_Id | Title      | Credits | Department_Id |
++-----------+------------+---------+---------------+
+|       301 | DSA        |       5 |           201 |
+|       302 | OS         |       4 |           201 |
+|       303 | Management |       4 |           202 |
+|       304 | AI         |       4 |           203 |
+|       305 | Algebra    |       4 |           204 |
++-----------+------------+---------+---------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> update student set major="Iterdesciplinary" where Student_Id between 101 and 103;
+ERROR 1406 (22001): Data too long for column 'Major' at row 1
+mysql> update student set major="desciplinary" where Student_Id between 101 and 103;
+ERROR 1406 (22001): Data too long for column 'Major' at row 1
+mysql> update student set major="descip" where Student_Id between 101 and 103;
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from student;
++------------+---------+-------------------+------------+
+| Student_Id | Name    | Email             | Major      |
++------------+---------+-------------------+------------+
+|        101 | Darshan | darshu@gmail.com  | descip     |
+|        102 | Sagar   | sagar@gmail.com   | descip     |
+|        103 | Chethan | chethan@gmail.com | descip     |
+|        104 | Ravi    | ravi@gmail.com    | CSE        |
+|        105 | Vivek   | vivek@gmail.com   | Undeclared |
++------------+---------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from enrollment;
++------------+-----------+----------+-------+
+| Student_Id | Course_Id | Semester | Grade |
++------------+-----------+----------+-------+
+|        101 |       301 | I        | A+    |
+|        103 |       303 | II       | B     |
+|        104 |       304 | IV       | B+    |
+|        105 |       305 | V        | O     |
++------------+-----------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update enrollment set Grade=null where Student_Id=105;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update enrollment set Grade=fail where Grade=null;
+ERROR 1054 (42S22): Unknown column 'fail' in 'field list'
+mysql> update enrollment set Grade="fail" where Grade=null;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update enrollment set Grade="fail" where Grade is null;
+ERROR 1406 (22001): Data too long for column 'Grade' at row 4
+mysql> alter table enrollment modify Grade char(10);
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc enrollment;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Student_Id | int         | NO   | PRI | NULL    |       |
+| Course_Id  | int         | YES  | MUL | NULL    |       |
+| Semester   | varchar(10) | YES  |     | NULL    |       |
+| Grade      | char(10)    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update enrollment set Grade="fail" where Grade is null;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from enrollment;
++------------+-----------+----------+-------+
+| Student_Id | Course_Id | Semester | Grade |
++------------+-----------+----------+-------+
+|        101 |       301 | I        | A+    |
+|        103 |       303 | II       | B     |
+|        104 |       304 | IV       | B+    |
+|        105 |       305 | V        | fail  |
++------------+-----------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from instructor;
++---------------+--------+---------------+
+| Instructor_Id | Name   | Department_Id |
++---------------+--------+---------------+
+|           401 | Shivu  |           201 |
+|           402 | Sowmya |           202 |
+|           403 | Kushi  |           203 |
+|           404 | Guru   |           204 |
+|           405 | Raghu  |           201 |
++---------------+--------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> update instructor set Department_Id=31 where Instructor_Id!=402;
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`university023`.`instructor`, CONSTRAINT `instructor_ibfk_1` FOREIGN KEY (`Department_Id`) REFERENCES `department` (`Department_Id`))
+mysql> select * from department;
++---------------+-----------------+
+| Department_Id | Department_Name |
++---------------+-----------------+
+|           201 | MCA             |
+|           202 | MBA             |
+|           203 | CSE             |
+|           204 | MSc             |
++---------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> update department set Department_Id=31 where Department_Id!=202;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`university023`.`course`, CONSTRAINT `course_ibfk_1` FOREIGN KEY (`Department_Id`) REFERENCES `department` (`Department_Id`))
+mysql> update instructor set Department_Id=201 where Instructor_Id!=402;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 4  Changed: 2  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Student_Id | int         | NO   | PRI | NULL    |       |
+| Name       | char(20)    | YES  |     | NULL    |       |
+| Email      | varchar(20) | YES  |     | NULL    |       |
+| Major      | char(10)    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------------+---------+-------------------+------------+
+| Student_Id | Name    | Email             | Major      |
++------------+---------+-------------------+------------+
+|        101 | Darshan | darshu@gmail.com  | descip     |
+|        102 | Sagar   | sagar@gmail.com   | descip     |
+|        103 | Chethan | chethan@gmail.com | descip     |
+|        104 | Ravi    | ravi@gmail.com    | CSE        |
+|        105 | Vivek   | vivek@gmail.com   | Undeclared |
++------------+---------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student set Name="Deepak" where Student_Id=102;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set Email="msrit.edu" where Name like "D%";
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from student;
++------------+---------+-------------------+------------+
+| Student_Id | Name    | Email             | Major      |
++------------+---------+-------------------+------------+
+|        101 | Darshan | msrit.edu         | descip     |
+|        102 | Deepak  | msrit.edu         | descip     |
+|        103 | Chethan | chethan@gmail.com | descip     |
+|        104 | Ravi    | ravi@gmail.com    | CSE        |
+|        105 | Vivek   | vivek@gmail.com   | Undeclared |
++------------+---------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update department set Department_Id=31 where Department_Id=202;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`university023`.`course`, CONSTRAINT `course_ibfk_1` FOREIGN KEY (`Department_Id`) REFERENCES `department` (`Department_Id`))
+mysql> select * from department;
++---------------+-----------------+
+| Department_Id | Department_Name |
++---------------+-----------------+
+|           201 | MCA             |
+|           202 | MBA             |
+|           203 | CSE             |
+|           204 | MSc             |
++---------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> update department set Department_Id=31 where Department_Id=202;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`university023`.`course`, CONSTRAINT `course_ibfk_1` FOREIGN KEY (`Department_Id`) REFERENCES `department` (`Department_Id`))
+mysql> select * from enrollment;
++------------+-----------+----------+-------+
+| Student_Id | Course_Id | Semester | Grade |
++------------+-----------+----------+-------+
+|        101 |       301 | I        | A+    |
+|        103 |       303 | II       | B     |
+|        104 |       304 | IV       | B+    |
+|        105 |       305 | V        | fail  |
++------------+-----------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update enrollement set Grade=case when Grade="A" then "A+"
+    -> when Grade="B" then "B+"
+    -> else Grade
+    -> end;
+ERROR 1146 (42S02): Table 'university023.enrollement' doesn't exist
+mysql> show tables;
++-------------------------+
+| Tables_in_university023 |
++-------------------------+
+| course                  |
+| department              |
+| enrollment              |
+| instructor              |
+| student                 |
++-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> update enrollement set Grade=case when Grade="A" then "A+"
+    -> when Grade="B" then "B+"
+    -> else Grade
+    -> end;
+ERROR 1146 (42S02): Table 'university023.enrollement' doesn't exist
+mysql> desc enrollment;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Student_Id | int         | NO   | PRI | NULL    |       |
+| Course_Id  | int         | YES  | MUL | NULL    |       |
+| Semester   | varchar(10) | YES  |     | NULL    |       |
+| Grade      | char(10)    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update enrollment set Grade=case when Grade="A" then "A+"
+    -> when Grade="B" then "B+"
+    -> else Grade
+    -> end;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 4  Changed: 1  Warnings: 0
+
+mysql> select * from enrollment;
++------------+-----------+----------+-------+
+| Student_Id | Course_Id | Semester | Grade |
++------------+-----------+----------+-------+
+|        101 |       301 | I        | A+    |
+|        103 |       303 | II       | B+    |
+|        104 |       304 | IV       | B+    |
+|        105 |       305 | V        | fail  |
++------------+-----------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
