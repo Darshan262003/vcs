@@ -73,3 +73,7 @@
 .off{
     color: green;
 }
+.feedbox{
+    width: 400px;
+    background-color: pink;
+}

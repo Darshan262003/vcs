@@ -17,6 +17,9 @@ import Msg from "./classexample";
 import Validation from "./validate";
 import Newsletter from "./form";
 import UserStatusSwitcher from "./form2";
+import Op from "./Event1";
+import Op1 from "./count";
+import FeedbackPoll from "./Feedbackpoll";
 function App()
 {
   return(
@@ -37,6 +40,9 @@ function App()
        <Validation />
        <Newsletter/>
        <UserStatusSwitcher/>
+       <Op/>
+       <Op1/>
+       <FeedbackPoll/>
     </div>
 
   );
