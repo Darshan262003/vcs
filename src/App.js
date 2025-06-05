@@ -4,7 +4,7 @@ import Unordered from "./order";
 import TodoList from "./todo";
 import ProductCata from "./check";
 import TodoList1 from "./present";
-import Chethan from "./present";
+
 import "./myapp.css";
 import Weather from "./weather";
 import "./motivation.css";
@@ -20,6 +20,7 @@ import UserStatusSwitcher from "./form2";
 import Op from "./Event1";
 import Op1 from "./count";
 import FeedbackPoll from "./Feedbackpoll";
+import ExpenseTrackerInput1 from "./Expense";
 function App()
 {
   return(
@@ -43,6 +44,7 @@ function App()
        <Op/>
        <Op1/>
        <FeedbackPoll/>
+       <ExpenseTrackerInput1/>
     </div>
 
   );
