@@ -1,0 +1,127 @@
+.head{
+    background-color: black;
+    color:white;
+}
+.box2{
+    background-color: rgb(98, 247, 247);
+    width: 300px;
+    border-radius: 15px;
+    padding: 6px 8px;
+    border: 1px solid black;
+    margin: 10px 50px;
+    
+}
+.box3
+{
+    border: 2px dashed rgb(11, 11, 12);
+    background-color: beige;
+    margin:50px;
+    width: 400px;
+    border-top:9px solid rgba(24, 23, 26, 0.685);
+    
+}
+.container{
+    display: grid ;
+ 
+    border: 2px solid black;
+    text-align: center;
+    padding: 10px ;
+    grid-template-columns: auto auto auto;
+}
+.container>div{
+    border: 1px solid black;
+    padding: 2px 5px;
+    color: black;
+}
+.bigcontainer{
+    background: linear-gradient(#e66465, #9198e5);
+    text-align: center;
+    color: rgb(240, 216, 216);
+}
+.bigcontainer>h1{
+    margin-bottom:5px;
+}
+.form1{
+    width: 300px;
+    overflow: hidden;
+    border: 1px solid black;
+    padding: 5px 10px;
+    margin:20px;
+    background-color: rgb(199, 193, 193);
+    text-align: center;
+}
+.form1>input{
+    width: 90%;
+    margin: 3px;
+    border: 1px solid rgb(7, 1, 1);
+    padding: 3px;
+    border: none;
+    border-radius: 5px;
+
+}
+.form1>button{
+    border-radius: 5px;
+    border: none;
+    padding: 5px 15px;
+    background-color: rgb(117, 117, 248);
+    color: white;
+    margin-top: 10px;
+}
+.on{
+    color: red;
+}
+.off{
+    color: green;
+}
+.feedbox{
+    width: 500px;
+    margin: 40px ;
+    height:150px;
+    padding-top:25px;
+    text-align: center;
+    background-color:rgba(8, 253, 253, 0.288);
+}
+.b1{
+    background-color: rgb(17, 216, 17);
+    border: none;
+    border-radius: 4px;
+    padding:3px 6px;
+    color: white;
+    margin-right: 6px;
+    width:10%;
+}
+.b2{
+    background-color: orange;
+    border: none;
+    border-radius: 4px;
+    padding:3px 6px;
+    color: white;
+    margin-right: 6px;
+    width:12%;
+
+}
+.b3{
+    background-color: red;
+    border: none;
+    border-radius: 4px;
+    padding:3px 6px;
+    color: white;
+    margin-right: 6px;
+    width:10%;
+}
+.themeselector{
+  max-width: 400px;
+  margin: 30px auto;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+.preview-box{
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.light{
+    background-color: white;
+    
+}

@@ -1,0 +1,93 @@
+
+//*******************************************SetTimeout************************************************ */
+
+
+// console.log("Start");
+// let i=0;
+// for(i=10;i>0;i--)
+// {
+//     console.log(i);
+// }
+// setTimeout(()=>
+// {
+//    console.log(i==0?"Time up":i);
+// },8000);
+//console.log("End");
+
+
+//*******************************************EventEmmiter************************************************ */
+
+// const EventEmitter=require('events');
+
+// const myEmitter=new EventEmitter();
+
+// myEmitter.on('greet',()=>{
+//     console.log("Hello from EventEmitter");
+// });
+
+
+// myEmitter.emit('greet');
+// const EventEmitter=require('events');
+
+// const myEmitter=new EventEmitter();
+
+// myEmitter.on('Login',Username=>{console.log(`${Username} has  Loggedin`)});
+
+// myEmitter.emit('Login',"Darshan");
+
+//*******************************************BufferConcept************************************************ */
+
+
+//  const buffer=Buffer.from("Hello");
+//  console.log(buffer);
+//  console.log(buffer.toString());
+
+//  buffer[0]=68;
+//  console.log(buffer.toString());
+
+// const buffer=Buffer.from("NOde.js");
+// console.log(buffer);
+
+// buffer[0]=67;
+// console.log(buffer.toString());
+
+
+//*******************************************ReadFile************************************************ */
+
+
+// const fs=require('fs');
+// const readStream=fs.createReadStream('newfile.txt','utf8');
+
+
+// readStream.on('data',(chunk)=>
+// {
+//     console.log('Chunk:',chunk);
+
+// });
+
+// readStream.on('end',()=>{
+//     console.log('Finshed Reading')
+// })
+
+
+
+//*******************************************WriteFile************************************************ */
+
+// const fs=require('fs');
+// fs.writeFile('Output.txt',"Hello,Node!",(err)=>
+// {
+//     if(err) throw err;
+//     console.log('File created and written successfully');
+// });
+
+
+
+
+const fs=require('fs');
+const content="Welcome to node js";
+fs.writeFile('Welcome.txt',content,(err)=>
+{
+    if(err) throw err;
+    console.log(content)
+    console.log('File created and written successfully');
+});

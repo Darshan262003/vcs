@@ -1,0 +1,10 @@
+.box{
+    background-color: lightblue;
+    border-left:5px solid grey ;
+    width: 200px;
+    margin:100px;
+    padding: 10px auto;
+    font-style: italic;
+
+}
+

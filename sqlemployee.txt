@@ -1,0 +1,315 @@
+
+C:\Users\MCA1-B1>mysql -u mcauser1 -p
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.37 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| comp               |
+| company1           |
+| company23          |
+| company_83         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| university023      |
+| world              |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> use company23
+Database changed
+mysql> show tables
+    ->
+    -> ^C
+mysql> show tables;
++---------------------+
+| Tables_in_company23 |
++---------------------+
+| employee            |
++---------------------+
+1 row in set (0.01 sec)
+
+mysql> desc tables
+    -> ^Z^C
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| EmployeeID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name         | varchar(30) | YES  |     | NULL    |       |
+| Email        | varchar(30) | YES  |     | NULL    |       |
+| Phone        | int         | YES  |     | NULL    |       |
+| HireDate     | date        | YES  |     | NULL    |       |
+| Jobtitle     | varchar(50) | YES  |     | NULL    |       |
+| DepartmentID | varchar(10) | YES  |     | NULL    |       |
+| ManagerID    | varchar(10) | YES  | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> create table Department(DepartmentID int(10) primary key,DepartmentName varchar(100),Location char(100));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> CREATE table Project(ProjectId int(10),ProjectName char(50),StartDate date,EndDate date,Budget int(10),DepartmentId int(10),foreign key(DepartmentId) references Department(DepartmentId));
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_company23 |
++---------------------+
+| department          |
+| employee            |
+| project             |
++---------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc Project
+    -> ^C
+mysql> desc Project;
++--------------+----------+------+-----+---------+-------+
+| Field        | Type     | Null | Key | Default | Extra |
++--------------+----------+------+-----+---------+-------+
+| ProjectId    | int      | YES  |     | NULL    |       |
+| ProjectName  | char(50) | YES  |     | NULL    |       |
+| StartDate    | date     | YES  |     | NULL    |       |
+| EndDate      | date     | YES  |     | NULL    |       |
+| Budget       | int      | YES  |     | NULL    |       |
+| DepartmentId | int      | YES  | MUL | NULL    |       |
++--------------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID int(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreignkey(EmployeeID) references employee(EmployeeID),foreign key(ProjectID) references project(ProjectId));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(EmployeeID) references employee(EmployeeID),foreign key(ProjectID) references p' at line 1
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID int(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreignkey(EmployeeID) references employee(EmployeeID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(EmployeeID) references employee(EmployeeID))' at line 1
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID int(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreign key(EmployeeID) references employee(EmployeeID),foreign key(ProjectID) references project(ProjectId));
+ERROR 3780 (HY000): Referencing column 'EmployeeID' and referenced column 'EmployeeID' in foreign key constraint 'assignment_ibfk_1' are incompatible.
+mysql> alter table employee modify EmployeeID int(10);
+ERROR 3780 (HY000): Referencing column 'ManagerID' and referenced column 'EmployeeID' in foreign key constraint 'employee_ibfk_1' are incompatible.
+mysql> alter table employee modify EmployeeID int(10);
+ERROR 3780 (HY000): Referencing column 'ManagerID' and referenced column 'EmployeeID' in foreign key constraint 'employee_ibfk_1' are incompatible.
+mysql> alter table employee modify EmployeeID int(10),ManagerID int(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ManagerID int(10)' at line 1
+mysql> alter table employee modify ManagerID int(10);
+ERROR 3780 (HY000): Referencing column 'ManagerID' and referenced column 'EmployeeID' in foreign key constraint 'employee_ibfk_1' are incompatible.
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID varchar(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreign key(EmployeeID) references employee(EmployeeID),foreign key(ProjectID) references project(ProjectId));
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'assignment_ibfk_2' in the referenced table 'project'
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID varchar(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreign key(EmployeeID) references employee(EmployeeID),foreign key(ProjectID) references Project(ProjectId));
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'assignment_ibfk_2' in the referenced table 'project'
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID varchar(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreign key(EmployeeID) references employee(EmployeeID),foreign key(ProjectID) references Project(ProjectId));
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'assignment_ibfk_2' in the referenced table 'project'
+mysql> create table assignment(AssignmentID int(10) primary key,EmployeeID varchar(10),ProjectID int(10),Role varchar(20),Hoursworked int(10),foreign key(EmployeeID) references employee(EmployeeID));
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> create table Salary(SalaryID int(10) primary key,EmployeeID varchar(10),Amount int(50),EffectiveDate date,PayGrade varchar(30),foreign key(EmployeeID) references employee(EmployeeID));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> create table Leave(LeaveID int(10) primary key,EmployeeID varchar(10),StartDate date,EndDate date,LeaveType enum('sick','casual','maternity'),Status enum('pending','approved','rejected'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Leave(LeaveID int(10) primary key,EmployeeID varchar(10),StartDate date,EndDate ' at line 1
+mysql> create table Leave1(LeaveID int(10) primary key,EmployeeID varchar(10),StartDate date,EndDate date,LeaveType enum('sick','casual','maternity'),Status enum('pending','approved','rejected'));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> alter table employee add column Gender char(10);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| EmployeeID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name         | varchar(30) | YES  |     | NULL    |       |
+| Email        | varchar(30) | YES  |     | NULL    |       |
+| Phone        | int         | YES  |     | NULL    |       |
+| HireDate     | date        | YES  |     | NULL    |       |
+| Jobtitle     | varchar(50) | YES  |     | NULL    |       |
+| DepartmentID | varchar(10) | YES  |     | NULL    |       |
+| ManagerID    | varchar(10) | YES  | MUL | NULL    |       |
+| Gender       | char(10)    | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table employee modify Phone int(20);
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc Department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| DepartmentID   | int          | NO   | PRI | NULL    |       |
+| DepartmentName | varchar(100) | YES  |     | NULL    |       |
+| Location       | char(100)    | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table Department drop column Location;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Department;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| DepartmentID   | int          | NO   | PRI | NULL    |       |
+| DepartmentName | varchar(100) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc Assignment;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| AssignmentID | int         | NO   | PRI | NULL    |       |
+| EmployeeID   | varchar(10) | YES  | MUL | NULL    |       |
+| ProjectID    | int         | YES  |     | NULL    |       |
+| Role         | varchar(20) | YES  |     | NULL    |       |
+| Hoursworked  | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table Salary rename column Amount to SalaryAmount;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> rename table Leave1 to EmployeeLeave;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table Assignment modify Hoursworked int(10) check(Hoursworked>=0);
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc Assignment;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| AssignmentID | int         | NO   | PRI | NULL    |       |
+| EmployeeID   | varchar(10) | YES  | MUL | NULL    |       |
+| ProjectID    | int         | YES  |     | NULL    |       |
+| Role         | varchar(20) | YES  |     | NULL    |       |
+| Hoursworked  | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> show create table Project;
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                  |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Project | CREATE TABLE `project` (
+  `ProjectId` int DEFAULT NULL,
+  `ProjectName` char(50) DEFAULT NULL,
+  `StartDate` date DEFAULT NULL,
+  `EndDate` date DEFAULT NULL,
+  `Budget` int DEFAULT NULL,
+  `DepartmentId` int DEFAULT NULL,
+  KEY `DepartmentId` (`DepartmentId`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`DepartmentId`) REFERENCES `department` (`DepartmentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| EmployeeID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name         | varchar(30) | YES  |     | NULL    |       |
+| Email        | varchar(30) | YES  |     | NULL    |       |
+| Phone        | int         | YES  |     | NULL    |       |
+| HireDate     | date        | YES  |     | NULL    |       |
+| Jobtitle     | varchar(50) | YES  |     | NULL    |       |
+| DepartmentID | varchar(10) | YES  |     | NULL    |       |
+| ManagerID    | varchar(10) | YES  | MUL | NULL    |       |
+| Gender       | char(10)    | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table employee add constraint foreign key(DepartmentID) references Department(DepartmentID);
+ERROR 3780 (HY000): Referencing column 'DepartmentID' and referenced column 'DepartmentID' in foreign key constraint 'employee_ibfk_2' are incompatible.
+mysql> alter table employee modify DepartmentID int(10);
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table employee add constraint foreign key(DepartmentID) references Department(DepartmentID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show create table Project;
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                  |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Project | CREATE TABLE `project` (
+  `ProjectId` int DEFAULT NULL,
+  `ProjectName` char(50) DEFAULT NULL,
+  `StartDate` date DEFAULT NULL,
+  `EndDate` date DEFAULT NULL,
+  `Budget` int DEFAULT NULL,
+  `DepartmentId` int DEFAULT NULL,
+  KEY `DepartmentId` (`DepartmentId`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`DepartmentId`) REFERENCES `department` (`DepartmentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> desc Project;
++--------------+----------+------+-----+---------+-------+
+| Field        | Type     | Null | Key | Default | Extra |
++--------------+----------+------+-----+---------+-------+
+| ProjectId    | int      | YES  |     | NULL    |       |
+| ProjectName  | char(50) | YES  |     | NULL    |       |
+| StartDate    | date     | YES  |     | NULL    |       |
+| EndDate      | date     | YES  |     | NULL    |       |
+| Budget       | int      | YES  |     | NULL    |       |
+| DepartmentId | int      | YES  | MUL | NULL    |       |
++--------------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table Project drop foreign key project_ibfk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Project;
++--------------+----------+------+-----+---------+-------+
+| Field        | Type     | Null | Key | Default | Extra |
++--------------+----------+------+-----+---------+-------+
+| ProjectId    | int      | YES  |     | NULL    |       |
+| ProjectName  | char(50) | YES  |     | NULL    |       |
+| StartDate    | date     | YES  |     | NULL    |       |
+| EndDate      | date     | YES  |     | NULL    |       |
+| Budget       | int      | YES  |     | NULL    |       |
+| DepartmentId | int      | YES  | MUL | NULL    |       |
++--------------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table Project drop DepartmentId;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Project;
++-------------+----------+------+-----+---------+-------+
+| Field       | Type     | Null | Key | Default | Extra |
++-------------+----------+------+-----+---------+-------+
+| ProjectId   | int      | YES  |     | NULL    |       |
+| ProjectName | char(50) | YES  |     | NULL    |       |
+| StartDate   | date     | YES  |     | NULL    |       |
+| EndDate     | date     | YES  |     | NULL    |       |
+| Budget      | int      | YES  |     | NULL    |       |
++-------------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
